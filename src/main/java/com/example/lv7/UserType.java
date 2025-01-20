@@ -1,4 +1,4 @@
-package com.example.lv6;
+package com.example.lv7;
 
 public enum UserType {
     NATIONAL_MERIT(0.10),   // 국가유공자

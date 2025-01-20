@@ -1,4 +1,4 @@
-package com.example.lv6;
+package com.example.lv7;
 
 import java.util.Map;
 
@@ -41,5 +41,11 @@ public class CartService {
                 .stream()
                 .mapToDouble(entry -> entry.getKey().getPrice() * entry.getValue())
                 .sum();
+    }
+
+    public double getDiscountedTotalPrice(UserType userType) {
+        double total = getTotalPrice();
+        double discountRate = userType.getDiscountRate();
+        return total - (total * discountRate);
     }
 }

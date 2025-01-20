@@ -1,4 +1,4 @@
-package com.example.lv6;
+package com.example.lv7;
 
 import java.util.List;
 import java.util.Scanner;
@@ -88,23 +88,15 @@ public class KioskService {
         int orderChoice = sc.nextInt();
         switch (orderChoice) {
             case 1:
-                // 1) 할인 정보를 입력받는다.
-                UserType userType = askForDiscountInfo();
-
-                // 2) 할인된 최종 금액 계산
+                UserType userType = getDiscountUserType();
                 double finalPrice = cartService.getDiscountedTotalPrice(userType);
 
-                // 3) 주문 완료 메시지
                 System.out.printf("주문이 완료되었습니다. 금액은 W %.1f 입니다.\n\n", finalPrice);
-
-                // 4) 장바구니 초기화
                 cartService.clearCart();
                 break;
-
             case 2:
                 // 메뉴판으로 돌아감
                 break;
-
             default:
                 throw new IllegalArgumentException("잘못된 입력입니다.");
         }
@@ -113,7 +105,7 @@ public class KioskService {
     /**
      * 할인 정보를 입력 받아 UserType 리턴
      */
-    private UserType askForDiscountInfo() {
+    private UserType getDiscountUserType() {
         System.out.println("할인 정보를 입력해주세요.");
         System.out.println("1. 국가유공자 : 10%");
         System.out.println("2. 군인     :  5%");
@@ -121,14 +113,13 @@ public class KioskService {
         System.out.println("4. 일반     :  0%");
 
         int discountChoice = sc.nextInt();
-        switch (discountChoice) {
-            case 1: return UserType.NATIONAL_MERIT;  // 10%
-            case 2: return UserType.MILITARY;        // 5%
-            case 3: return UserType.STUDENT;         // 3%
-            case 4: return UserType.NORMAL;          // 0%
-            default:
-                throw new IllegalArgumentException("잘못된 입력입니다.");
-        }
+        return switch (discountChoice) {
+            case 1 -> UserType.NATIONAL_MERIT;  // 10%
+            case 2 -> UserType.MILITARY;        // 5%
+            case 3 -> UserType.STUDENT;         // 3%
+            case 4 -> UserType.NORMAL;          // 0%
+            default -> throw new IllegalArgumentException("잘못된 입력입니다.");
+        };
     }
 
     /**
